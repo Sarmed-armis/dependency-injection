@@ -35,7 +35,15 @@ namespace WebApplication1.services.imp
 
         public void Insert(TEntity entity)
         {
-            throw new NotImplementedException();
+
+            using (ISession session = NHibernateHelper<TEntity>.OpenSession())
+            {
+                using (ITransaction transaction = session.BeginTransaction())
+                {
+                    session.Save(entity);
+                    transaction.Commit();
+                }
+            }
         }
 
         public void Update(TEntity entity, int id)

@@ -55,18 +55,11 @@ namespace FulentNHirbent001.Controllers
         {
             try
             {
-               
-             
-                    using (ISession session = NHibernateHelper.OpenSession())
-                    {
-                        using (ITransaction transaction = session.BeginTransaction())
-                        {
-                            session.Save(employee);
-                            transaction.Commit();
-                        }
-                    }
 
-                    return RedirectToAction("Index");
+
+                _employeeServies.Insert(employee);
+
+                return RedirectToAction("Index");
             }
             catch
             {
@@ -84,28 +77,28 @@ namespace FulentNHirbent001.Controllers
         [HttpPost]
         public ActionResult Edit(int id, Employee employee)
         {
-            try
-            {
-                using (ISession session = NHibernateHelper.OpenSession())
-                {
-                    var employeetoUpdate = session.Get<Employee>(id);
+            //try
+            //{
+            //    using (ISession session = NHibernateHelper.OpenSession())
+            //    {
+            //        var employeetoUpdate = session.Get<Employee>(id);
 
-                    employeetoUpdate.Designation = employee.Designation;
-                    employeetoUpdate.FirstName = employee.FirstName;
-                    employeetoUpdate.LastName = employee.LastName;
+            //        employeetoUpdate.Designation = employee.Designation;
+            //        employeetoUpdate.FirstName = employee.FirstName;
+            //        employeetoUpdate.LastName = employee.LastName;
 
-                    using (ITransaction transaction = session.BeginTransaction())
-                    {
-                        session.Save(employeetoUpdate);
-                        transaction.Commit();
-                    }
-                }
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            //        using (ITransaction transaction = session.BeginTransaction())
+            //        {
+            //            session.Save(employeetoUpdate);
+            //            transaction.Commit();
+            //        }
+            //    }
+            //    return RedirectToAction("Index");
+            //}
+            //catch
+            //{
+             return View();
+            //}
         }
 
         // GET: Employee/Delete/5
@@ -133,13 +126,7 @@ namespace FulentNHirbent001.Controllers
         public ActionResult GetReportpdf()
         
         {
-            List<Employee> employees;
-
-            using (ISession session = NHibernateHelper.OpenSession())
-            {
-                 employees = session.Query<Employee>().ToList();
-              
-            }
+            var employees = _employeeServies.GetAll().ToList();
             var ReportPath = Server.MapPath("~/Reports/em.rdlc");
 
             RenderReport(ReportPath, "PDF", employees);
