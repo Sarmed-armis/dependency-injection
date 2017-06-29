@@ -21,8 +21,8 @@ namespace WebApplication1.services.imp
         {
             using (ISession session = NHibernateHelper<TEntity>.OpenSession())
             {
-                var employees = session.Query<TEntity>().ToList();
-                return employees;
+                var ResultList= session.Query<TEntity>().ToList();
+                return ResultList;
             }
 
             
