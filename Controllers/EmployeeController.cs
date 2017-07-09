@@ -9,6 +9,12 @@ using System.Web.Mvc;
 using System;
 using Microsoft.Reporting.WinForms;
 using WebApplication1.Data.Entity.services.imp;
+using System.Data.SqlClient;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System.IO;
+using iTextSharp.text.html.simpleparser;
+using System.Web;
 
 namespace FulentNHirbent001.Controllers
 {
@@ -16,6 +22,7 @@ namespace FulentNHirbent001.Controllers
     {
         
         private readonly employeeServies _employeeServies = new employeeServies();
+        private readonly rtpemployeeServies _rtpemployeeServies = new rtpemployeeServies();
 
         //public EmployeeController(employeeServies employeeServies)
         //{
@@ -37,9 +44,12 @@ namespace FulentNHirbent001.Controllers
         }
 
         // GET: Employee/Details/5
-        public ActionResult Details(int id)
+        public JsonResult Details(int id)
         {
-            return View();
+            IList<SqlParameter> pars = new List<SqlParameter> { new SqlParameter("Id", id) };
+            IList<rtpEmployee> employees= _rtpemployeeServies.PushStoredProcedure("dbo.monkey", pars);
+
+            return Json(employees, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Employee/Create
@@ -178,6 +188,58 @@ namespace FulentNHirbent001.Controllers
             Response.End();
         }
 
-      
+
+        #region printreprt
+        public void PrintReport()
+        {
+
+            IList<SqlParameter> pars = new List<SqlParameter> { new SqlParameter("Id",1) };
+            IList<rtpEmployee> employees = _rtpemployeeServies.PushStoredProcedure("dbo.monkey", pars);
+            //string HTMLContent = "Hello <b>World</b>";
+            Response.Clear();
+            Response.ContentType = "application/pdf";
+            Response.AddHeader("content-disposition", "attachment;filename=" + "PDFfile.pdf");
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.BinaryWrite(GetPDF(employees));
+            Response.End();
+        }
+
+        public byte[] GetPDF(IList<rtpEmployee> employees)
+        {
+            byte[] bPDF = null;
+
+            MemoryStream ms = new MemoryStream();
+          
+
+            // 1: create object of a itextsharp document class  
+            Document doc = new Document(PageSize.A4, 25, 25, 25, 25);
+
+            ////http://www.worldbestlearningcenter.com/index_files/csharp-pdf-pagesetup.htm
+
+            // 2: we create a itextsharp pdfwriter that listens to the document and directs a XML-stream to a file  
+            PdfWriter oPdfWriter = PdfWriter.GetInstance(doc, ms);
+
+            // 3: we create a worker parse the document  
+            HTMLWorker htmlWorker = new HTMLWorker(doc);
+
+            // 4: we open document and start the worker on the document  
+            doc.Open();
+            doc.Add(new Paragraph(employees[0].FirstName));
+            doc.Add(new Paragraph(employees[0].LastName));
+            doc.Add(new Paragraph(employees[0].name));
+            doc.Add(new Paragraph(employees[0].country));
+
+            // 6: close the document and the worker  
+
+            doc.Close();
+
+            bPDF = ms.ToArray();
+
+            return bPDF;
+        }
+#endregion
+
+        
+
     }
 }

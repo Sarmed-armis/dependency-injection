@@ -1,8 +1,8 @@
-﻿@model FulentNHirbent001.Models.Employee
+﻿@model FulentNHirbent001.Models.rtpEmployee
 
-@{
-    ViewBag.Title = "Details";
-}
+
+   
+
 
 <h2>Details</h2>
 
@@ -10,10 +10,7 @@
     <h4>Employee</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-
+    
         <dd>
             @Html.DisplayFor(model => model.FirstName)
         </dd>
@@ -33,10 +30,10 @@
         <dd>
             @Html.DisplayFor(model => model.Designation)
         </dd>
-
+    
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.EmployeeId }) |
+   
     @Html.ActionLink("Back to List", "Index")
 </p>

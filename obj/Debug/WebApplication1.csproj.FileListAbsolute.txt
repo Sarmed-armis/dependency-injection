@@ -164,3 +164,9 @@ C:\Users\lenovo\Documents\Visual Studio 2017\Projects\ReportProblem\WebApplicati
 C:\Users\lenovo\Documents\Visual Studio 2017\Projects\ReportProblem\WebApplication1\WebApplication1\obj\Debug\WebApplication1.csprojResolveAssemblyReference.cache
 C:\Users\lenovo\Documents\Visual Studio 2017\Projects\ReportProblem\WebApplication1\WebApplication1\obj\Debug\WebApplication1.dll
 C:\Users\lenovo\Documents\Visual Studio 2017\Projects\ReportProblem\WebApplication1\WebApplication1\obj\Debug\WebApplication1.pdb
+C:\Users\lenovo\Documents\Visual Studio 2017\Projects\ReportProblem\WebApplication1\WebApplication1\bin\EntityFramework.dll
+C:\Users\lenovo\Documents\Visual Studio 2017\Projects\ReportProblem\WebApplication1\WebApplication1\bin\EntityFramework.SqlServer.dll
+C:\Users\lenovo\Documents\Visual Studio 2017\Projects\ReportProblem\WebApplication1\WebApplication1\bin\EntityFramework.xml
+C:\Users\lenovo\Documents\Visual Studio 2017\Projects\ReportProblem\WebApplication1\WebApplication1\bin\EntityFramework.SqlServer.xml
+C:\Users\lenovo\Documents\Visual Studio 2017\Projects\ReportProblem\WebApplication1\WebApplication1\bin\itextsharp.dll
+C:\Users\lenovo\Documents\Visual Studio 2017\Projects\ReportProblem\WebApplication1\WebApplication1\bin\itextsharp.xml
