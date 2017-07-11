@@ -209,26 +209,37 @@ namespace FulentNHirbent001.Controllers
             byte[] bPDF = null;
 
             MemoryStream ms = new MemoryStream();
-          
-
+            BaseColor color = new BaseColor(120,12,14);
+         
+            //Rectangle pageSize = new Rectangle(216.0f, 720.0f);
+            Font font1 = new Font(FontFactory.GetFont("adobe garamond pro", 36f, color));
+        
             // 1: create object of a itextsharp document class  
-            Document doc = new Document(PageSize.A4, 25, 25, 25, 25);
+            Document doc = new Document(PageSize.A4);
+            doc.SetMargins(45f, 45f, 60f, 60f);
 
             ////http://www.worldbestlearningcenter.com/index_files/csharp-pdf-pagesetup.htm
 
             // 2: we create a itextsharp pdfwriter that listens to the document and directs a XML-stream to a file  
             PdfWriter oPdfWriter = PdfWriter.GetInstance(doc, ms);
-
+            BaseFont bf = BaseFont.CreateFont(Environment.GetEnvironmentVariable("windir") + @"\fonts\ARIALUNI.TTF", BaseFont.IDENTITY_H, true);
+            Font NormalFont = new iTextSharp.text.Font(bf, 25, Font.BOLD, color);
             // 3: we create a worker parse the document  
             HTMLWorker htmlWorker = new HTMLWorker(doc);
-
+            PdfPTable tbl = new PdfPTable(1);
+            PdfPCell cell = new PdfPCell();
+            cell.AddElement(new Phrase(25, "مرحبا بل عالم", NormalFont));
+            cell.RunDirection = PdfWriter.RUN_DIRECTION_RTL;
+            float hur = doc.PageSize.Height;
+            tbl.AddCell(cell);
             // 4: we open document and start the worker on the document  
             doc.Open();
-            doc.Add(new Paragraph(employees[0].FirstName));
-            doc.Add(new Paragraph(employees[0].LastName));
-            doc.Add(new Paragraph(employees[0].name));
-            doc.Add(new Paragraph(employees[0].country));
-
+            doc.Add(new Paragraph(employees[0].FirstName, font1));
+            doc.Add(new Paragraph(employees[0].LastName, font1));
+            doc.Add(new Paragraph(employees[0].name, font1));
+            doc.Add(new Paragraph(employees[0].country, font1));
+            doc.Add(new Paragraph(employees[0].country, font1));
+            doc.Add(tbl);
             // 6: close the document and the worker  
 
             doc.Close();
